@@ -1,5 +1,7 @@
 package cn.ytxu.data_structure_and_algorithm_analysis_learning_notes.guide_01;
 
+import java.util.Arrays;
+
 /**
  * Created by ytxu on 16/8/24.
  * simple array list
@@ -29,10 +31,22 @@ public class GenericCollection<E> {
         size = 0;
     }
 
-    public boolean insert(int index, E element) {
-        checkRange4Insert(index);
+    public void add(E element) {
+        if (elementData.length <= size) {
+            elementData = Arrays.copyOf(elementData, elementData.length * 2);
+        }
+        elementData[size] = element;
+        size++;
+    }
 
-        return false;
+    public void insert(int index, E element) {
+        checkRange4Insert(index);
+        if (elementData.length <= size) {
+            elementData = Arrays.copyOf(elementData, elementData.length * 2);
+        }
+        System.arraycopy(elementData, index, elementData, index + 1, size - index);
+        elementData[index] = element;
+        size++;
     }
 
     private void checkRange4Insert(int index) {
@@ -45,9 +59,11 @@ public class GenericCollection<E> {
         return "size is " + size + ", but the index is " + index;
     }
 
-    public boolean remove(int index) {
+    public void remove(int index) {
         checkRange4Remove(index);
-        return false;
+        System.arraycopy(elementData, index + 1, elementData, index, size - index - 1);
+        elementData[size - 1] = null;
+        size--;
     }
 
     private void checkRange4Remove(int index) {
@@ -56,24 +72,29 @@ public class GenericCollection<E> {
         }
     }
 
-    public boolean remove(E element) {
-        return false;
+    public void remove(E element) {
+        int index = indexOf(element);
+        remove(index);
     }
 
     public boolean isPresent(E element) {
+        return indexOf(element) > 0;
+    }
+
+    private int indexOf(E element) {
         for (int i = 0; i < size; i++) {
             Object ele = elementData[i];
             if (element == null) {
                 if (element == ele) {
-                    return true;
+                    return i;
                 }
             } else {
                 if (element.equals(ele)) {
-                    return true;
+                    return i;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
 }
