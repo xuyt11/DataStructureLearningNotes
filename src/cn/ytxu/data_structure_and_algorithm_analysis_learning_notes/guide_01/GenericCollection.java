@@ -9,6 +9,8 @@ import java.util.Arrays;
 public class GenericCollection<E> {
 
     public static final Object[] EMPTY = {};
+    public static final int DEFAULT_INITIAL_CAPACITY = 16;
+
     public Object[] elementData;
     private int size;
 
@@ -32,21 +34,24 @@ public class GenericCollection<E> {
     }
 
     public void add(E element) {
-        if (elementData.length <= size) {
-            elementData = Arrays.copyOf(elementData, elementData.length * 2);
-        }
+        ensureCapacity();
         elementData[size] = element;
         size++;
     }
 
     public void insert(int index, E element) {
         checkRange4Insert(index);
-        if (elementData.length <= size) {
-            elementData = Arrays.copyOf(elementData, elementData.length * 2);
-        }
+        ensureCapacity();
         System.arraycopy(elementData, index, elementData, index + 1, size - index);
         elementData[index] = element;
         size++;
+    }
+
+    private void ensureCapacity() {
+        if (elementData.length <= size) {
+            int newLength = Math.max(DEFAULT_INITIAL_CAPACITY, elementData.length) * 2 / 3;
+            elementData = Arrays.copyOf(elementData, newLength);
+        }
     }
 
     private void checkRange4Insert(int index) {
@@ -120,6 +125,14 @@ public class GenericCollection<E> {
         printlnSizeAndLength(collection);
         loopPrintCollectionItem(collection);
 
+        collection.makeEmpty();
+        System.out.println("is empty :" + collection.isEmpty());
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
+
+        collection.add("2");
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
     }
 
     private static void testInsertMethod() {
