@@ -18,7 +18,6 @@ public class GenericCollection<E> {
         } else {
             elementData = new Object[initialCapacity];
         }
-        size = initialCapacity;
     }
 
     public boolean isEmpty() {
@@ -27,15 +26,34 @@ public class GenericCollection<E> {
 
     public void makeEmpty() {
         elementData = EMPTY;
+        size = 0;
     }
 
     public boolean insert(int index, E element) {
+        checkRange4Insert(index);
+
         return false;
     }
 
-    public boolean remove(int index) {
+    private void checkRange4Insert(int index) {
+        if (index > size || index < 0) {
+            throw new IndexOutOfBoundsException(outOfBoundsMessage(index));
+        }
+    }
 
+    private String outOfBoundsMessage(int index) {
+        return "size is " + size + ", but the index is " + index;
+    }
+
+    public boolean remove(int index) {
+        checkRange4Remove(index);
         return false;
+    }
+
+    private void checkRange4Remove(int index) {
+        if (index >= size || index < 0) {
+            throw new IndexOutOfBoundsException(outOfBoundsMessage(index));
+        }
     }
 
     public boolean remove(E element) {
@@ -43,7 +61,7 @@ public class GenericCollection<E> {
     }
 
     public boolean isPresent(E element) {
-        for (int i = 0; i < elementData.length; i++) {
+        for (int i = 0; i < size; i++) {
             Object ele = elementData[i];
             if (element == null) {
                 if (element == ele) {
