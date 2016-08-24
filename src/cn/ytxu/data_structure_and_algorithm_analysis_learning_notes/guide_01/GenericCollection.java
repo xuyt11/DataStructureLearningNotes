@@ -104,7 +104,35 @@ public class GenericCollection<E> {
 
 
     public static void main(String... args) {
-        testAddMethod();
+        testRemoveMethod();
+    }
+
+    private static void testRemoveMethod() {
+        GenericCollection<String> collection = new GenericCollection<>(10);
+        for (int i = 0; i < 10; i++) {
+            collection.add("" + i);
+        }
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
+
+        collection.remove("0");
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
+
+        collection.remove(3);
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
+    }
+
+    private static void printlnSizeAndLength(GenericCollection collection) {
+        System.out.println("size:" + collection.size + ", array length:" + collection.elementData.length);
+    }
+
+    private static void loopPrintCollectionItem(GenericCollection collection) {
+        for (int i = 0; i < collection.size; i++) {
+            System.out.print(collection.get(i) + "\t");
+        }
+        System.out.println("\n==================");
     }
 
     private static void testAddMethod() {
