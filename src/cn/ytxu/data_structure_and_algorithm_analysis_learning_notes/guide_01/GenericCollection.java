@@ -23,7 +23,7 @@ public class GenericCollection<E> {
     }
 
     public boolean isEmpty() {
-        return elementData.length <= 0;
+        return size <= 0;
     }
 
     public void makeEmpty() {
@@ -104,7 +104,35 @@ public class GenericCollection<E> {
 
 
     public static void main(String... args) {
-        testRemoveMethod();
+        testEmptyFunction();
+    }
+
+    private static void testEmptyFunction() {
+        GenericCollection<String> collection = new GenericCollection<>(10);
+        System.out.println("is empty :" + collection.isEmpty());
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
+
+        for (int i = 0; i < 10; i++) {
+            collection.add("" + i);
+        }
+        System.out.println("is empty :" + collection.isEmpty());
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
+
+    }
+
+    private static void testInsertMethod() {
+        GenericCollection<String> collection = new GenericCollection<>(10);
+        for (int i = 0; i < 10; i++) {
+            collection.add("" + i);
+        }
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
+
+        collection.insert(3, "33");
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
     }
 
     private static void testRemoveMethod() {
@@ -140,19 +168,20 @@ public class GenericCollection<E> {
         for (int i = 0; i < 10; i++) {
             collection.add("" + i);
         }
-        System.out.println("size:" + collection.size + ", array length:" + collection.elementData.length);
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
+
         for (int i = 0; i < 5; i++) {
             collection.add("" + i * i);
         }
-        System.out.println("size:" + collection.size + ", array length:" + collection.elementData.length);
-        for (int i = 0; i < collection.size; i++) {
-            System.out.println("item data is " + collection.get(i));
-        }
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
     }
 
     private static void testSize() {
         GenericCollection<String> collection = new GenericCollection<>(10);
-        System.out.println("size:" + collection.size + ", array length:" + collection.elementData.length);
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
     }
 
     private static void testOutOfBounds() {
