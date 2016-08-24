@@ -97,4 +97,38 @@ public class GenericCollection<E> {
         return -1;
     }
 
+    private E get(int index) {
+        checkRange4Remove(index);
+        return (E) elementData[index];
+    }
+
+
+    public static void main(String... args) {
+        testAddMethod();
+    }
+
+    private static void testAddMethod() {
+        GenericCollection<String> collection = new GenericCollection<>(10);
+        for (int i = 0; i < 10; i++) {
+            collection.add("" + i);
+        }
+        System.out.println("size:" + collection.size + ", array length:" + collection.elementData.length);
+        for (int i = 0; i < 5; i++) {
+            collection.add("" + i * i);
+        }
+        System.out.println("size:" + collection.size + ", array length:" + collection.elementData.length);
+        for (int i = 0; i < collection.size; i++) {
+            System.out.println("item data is " + collection.get(i));
+        }
+    }
+
+    private static void testSize() {
+        GenericCollection<String> collection = new GenericCollection<>(10);
+        System.out.println("size:" + collection.size + ", array length:" + collection.elementData.length);
+    }
+
+    private static void testOutOfBounds() {
+        GenericCollection<String> collection = new GenericCollection<>(-1);
+    }
+
 }
