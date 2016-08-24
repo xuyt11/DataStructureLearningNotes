@@ -109,7 +109,20 @@ public class GenericCollection<E> {
 
 
     public static void main(String... args) {
-        testEmptyFunction();
+        testIsPresentFuntion();
+    }
+
+    private static void testIsPresentFuntion() {
+        GenericCollection<String> collection = new GenericCollection<>(10);
+        for (int i = 0; i < 10; i++) {
+            collection.add("" + i);
+        }
+        printlnSizeAndLength(collection);
+        loopPrintCollectionItem(collection);
+
+        System.out.println(collection.isPresent("2"));
+        System.out.println(collection.isPresent("22"));
+
     }
 
     private static void testEmptyFunction() {
