@@ -1,19 +1,24 @@
 package cn.ytxu.data_structure_and_algorithm_analysis_learning_notes.test.guide_01;
 
 import cn.ytxu.data_structure_and_algorithm_analysis_learning_notes.guide_01.GenericCollection;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created by ytxu on 16/8/24.
  * simple array list
  */
 public class TestGenericCollection {
+    private GenericCollection<String> collection;
 
-    public static void main(String... args) {
-        testIsPresentFuntion();
+
+    @Before
+    public void createGenericCollection() {
+        collection = new GenericCollection<>(10);
     }
 
-    private static void testIsPresentFuntion() {
-        GenericCollection<String> collection = new GenericCollection<>(10);
+    @Test
+    public void testIsPresentFuntion() {
         for (int i = 0; i < 10; i++) {
             collection.add("" + i);
         }
@@ -25,8 +30,8 @@ public class TestGenericCollection {
 
     }
 
-    private static void testEmptyFunction() {
-        GenericCollection<String> collection = new GenericCollection<>(10);
+    @Test
+    public void testEmptyFunction() {
         System.out.println("is empty :" + collection.isEmpty());
         printlnSizeAndLength(collection);
         loopPrintCollectionItem(collection);
@@ -48,8 +53,8 @@ public class TestGenericCollection {
         loopPrintCollectionItem(collection);
     }
 
-    private static void testInsertMethod() {
-        GenericCollection<String> collection = new GenericCollection<>(10);
+    @Test
+    public void testInsertMethod() {
         for (int i = 0; i < 10; i++) {
             collection.add("" + i);
         }
@@ -61,8 +66,8 @@ public class TestGenericCollection {
         loopPrintCollectionItem(collection);
     }
 
-    private static void testRemoveMethod() {
-        GenericCollection<String> collection = new GenericCollection<>(10);
+    @Test
+    public void testRemoveMethod() {
         for (int i = 0; i < 10; i++) {
             collection.add("" + i);
         }
@@ -78,19 +83,21 @@ public class TestGenericCollection {
         loopPrintCollectionItem(collection);
     }
 
-    private static void printlnSizeAndLength(GenericCollection collection) {
+    @Test
+    public void printlnSizeAndLength(GenericCollection collection) {
         System.out.println("size:" + collection.size() + ", array length:" + collection.elementData.length);
     }
 
-    private static void loopPrintCollectionItem(GenericCollection collection) {
+    @Test
+    public void loopPrintCollectionItem(GenericCollection collection) {
         for (int i = 0; i < collection.size(); i++) {
             System.out.print(collection.get(i) + "\t");
         }
         System.out.println("\n==================");
     }
 
-    private static void testAddMethod() {
-        GenericCollection<String> collection = new GenericCollection<>(10);
+    @Test
+    public void testAddMethod() {
         for (int i = 0; i < 10; i++) {
             collection.add("" + i);
         }
@@ -104,13 +111,14 @@ public class TestGenericCollection {
         loopPrintCollectionItem(collection);
     }
 
-    private static void testSize() {
-        GenericCollection<String> collection = new GenericCollection<>(10);
+    @Test
+    public void testSize() {
         printlnSizeAndLength(collection);
         loopPrintCollectionItem(collection);
     }
 
-    private static void testOutOfBounds() {
+    @Test
+    public void testOutOfBounds() {
         GenericCollection<String> collection = new GenericCollection<>(-1);
     }
 
