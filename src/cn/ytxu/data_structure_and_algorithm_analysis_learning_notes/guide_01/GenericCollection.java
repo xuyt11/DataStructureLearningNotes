@@ -49,8 +49,9 @@ public class GenericCollection<E> {
 
     private void ensureCapacity() {
         if (elementData.length <= size) {
-            int newLength = Math.max(DEFAULT_INITIAL_CAPACITY, elementData.length) * 2 / 3;
-            elementData = Arrays.copyOf(elementData, newLength);
+            int addLen = Math.max(DEFAULT_INITIAL_CAPACITY, elementData.length) * 2 / 3;
+            int newLen = addLen + elementData.length;
+            elementData = Arrays.copyOf(elementData, newLen);
         }
     }
 

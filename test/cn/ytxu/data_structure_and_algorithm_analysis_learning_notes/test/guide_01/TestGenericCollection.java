@@ -1,8 +1,11 @@
 package cn.ytxu.data_structure_and_algorithm_analysis_learning_notes.test.guide_01;
 
 import cn.ytxu.data_structure_and_algorithm_analysis_learning_notes.guide_01.GenericCollection;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.theories.suppliers.TestedOn;
 
 /**
  * Created by ytxu on 16/8/24.
@@ -11,6 +14,17 @@ import org.junit.Test;
 public class TestGenericCollection {
     private GenericCollection<String> collection;
 
+
+    @Test
+    public void testOutOfBounds() {
+        try {
+            new GenericCollection<>(-1);
+            Assert.assertTrue(false);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            Assert.assertTrue(true);
+        }
+    }
 
     @Before
     public void createGenericCollection() {
@@ -84,19 +98,6 @@ public class TestGenericCollection {
     }
 
     @Test
-    public void printlnSizeAndLength(GenericCollection collection) {
-        System.out.println("size:" + collection.size() + ", array length:" + collection.elementData.length);
-    }
-
-    @Test
-    public void loopPrintCollectionItem(GenericCollection collection) {
-        for (int i = 0; i < collection.size(); i++) {
-            System.out.print(collection.get(i) + "\t");
-        }
-        System.out.println("\n==================");
-    }
-
-    @Test
     public void testAddMethod() {
         for (int i = 0; i < 10; i++) {
             collection.add("" + i);
@@ -117,9 +118,15 @@ public class TestGenericCollection {
         loopPrintCollectionItem(collection);
     }
 
-    @Test
-    public void testOutOfBounds() {
-        GenericCollection<String> collection = new GenericCollection<>(-1);
+    private void printlnSizeAndLength(GenericCollection collection) {
+        System.out.println("size:" + collection.size() + ", array length:" + collection.elementData.length);
+    }
+
+    private void loopPrintCollectionItem(GenericCollection collection) {
+        for (int i = 0; i < collection.size(); i++) {
+            System.out.print(collection.get(i) + "\t");
+        }
+        System.out.println("\n==================");
     }
 
 }
