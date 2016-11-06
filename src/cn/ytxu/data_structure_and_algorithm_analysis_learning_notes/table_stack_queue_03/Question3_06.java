@@ -22,8 +22,8 @@ public class Question3_06 {
 //        pass(5, 5);
 //        josephus(5, 5);
         System.out.println("=================");
-        pass(15, 15);
-        josephus(15, 15);
+        pass(155, 155);
+        josephus(155, 155);
     }
 
     public static void pass(int n, int m) {
@@ -67,6 +67,7 @@ public class Question3_06 {
 //            System.out.println();
             numLeft--;
         }
+        System.out.println();
         System.out.println("count" + count);
     }
 
@@ -81,24 +82,27 @@ public class Question3_06 {
 
         int count = 0;
         int transferCount = 0;
+        int realTimes = getRealTransferTimes(personNumbers, transferTimes);
         while (personIter.hasNext()) {
             count++;
-            if (personNumbers.size() == 1) {
+            if (personNumbers.size() == 1) {// find end...
                 break;
             }
 
             // must have two element in list
-            if (transferCount == transferTimes) {// find target element
+            if (transferCount == realTimes) {// find target element
                 Integer currPersonNumber = personIter.next();
                 System.out.print(currPersonNumber + ",\t");
                 personIter.remove();// remove target element
 //                System.out.println("list:" + personNumbers.toString());
                 transferCount = 0;// reset transfer count
+                realTimes = getRealTransferTimes(personNumbers, transferTimes);
             } else {// it`s must be transferCount < transferTimes
                 personIter.next();
                 transferCount++;
             }
-            if (!personIter.hasNext()) {// move to last element
+
+            if (!personIter.hasNext()) {// it`s last element, so move to behind element
                 personIter = personNumbers.listIterator();
             }
         }
@@ -112,6 +116,16 @@ public class Question3_06 {
             personNumbers.add(i + 1);
         }
         return personNumbers;
+    }
+
+    /**
+     * 获取当前，实际需要执行的传递次数
+     * @param personNumbers
+     * @param transferTimes
+     * @return
+     */
+    private static int getRealTransferTimes(List<Integer> personNumbers, int transferTimes) {
+        return transferTimes % personNumbers.size();
     }
 
 }
