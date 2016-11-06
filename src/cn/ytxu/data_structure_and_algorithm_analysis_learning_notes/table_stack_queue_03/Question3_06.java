@@ -10,10 +10,64 @@ public class Question3_06 {
 
     public static void main(String... args) {
 
-        josephus(1, 0);
-        josephus(5, 0);
-        josephus(5, 1);
-        josephus(5, 5);
+//        pass(1, 0);
+//        josephus(1, 0);
+//        System.out.println("=================");
+//        pass(5, 0);
+//        josephus(5, 0);
+//        System.out.println("=================");
+//        pass(5, 1);
+//        josephus(5, 1);
+//        System.out.println("=================");
+//        pass(5, 5);
+//        josephus(5, 5);
+        System.out.println("=================");
+        pass(15, 15);
+        josephus(15, 15);
+    }
+
+    public static void pass(int n, int m) {
+        int count = 0;
+        int i, j, mPrime, numLeft;
+        ArrayList<Integer> L = new ArrayList<>();
+        for (i = 1; i <= n; i++)
+            L.add(i);
+        ListIterator<Integer> iter = L.listIterator();
+        Integer item = 0;
+        numLeft = n;
+        mPrime = m % n;
+        for (i = 0; i < n; i++) {
+            count++;
+            mPrime = m % numLeft;
+            if (mPrime <= numLeft / 2) {
+                count++;
+                if (iter.hasNext())
+                    item = iter.next();
+                for (j = 0; j < mPrime; j++) {
+                    count++;
+                    if (!iter.hasNext())
+                        iter = L.listIterator();
+                    item = iter.next();
+                }
+            } else {
+                for (j = 0; j < numLeft - mPrime; j++) {
+                    count++;
+                    if (!iter.hasPrevious())
+                        iter = L.listIterator(L.size());
+                    item = iter.previous();
+                }
+            }
+            System.out.print(item + ",\t");
+            iter.remove();
+            if (!iter.hasNext())
+                iter = L.listIterator();
+//            System.out.println();
+//            for (Integer x : L)
+//                System.out.print(x + " ");
+//            System.out.println();
+            numLeft--;
+        }
+        System.out.println("count" + count);
     }
 
     /**
@@ -25,8 +79,10 @@ public class Question3_06 {
         List<Integer> personNumbers = getPersonNumbers(personNumber);
         ListIterator<Integer> personIter = personNumbers.listIterator();
 
+        int count = 0;
         int transferCount = 0;
         while (personIter.hasNext()) {
+            count++;
             if (personNumbers.size() == 1) {
                 break;
             }
@@ -41,13 +97,13 @@ public class Question3_06 {
             } else {// it`s must be transferCount < transferTimes
                 personIter.next();
                 transferCount++;
-                if (!personIter.hasNext()) {// move to last element
-                    personIter = personNumbers.listIterator();
-                }
+            }
+            if (!personIter.hasNext()) {// move to last element
+                personIter = personNumbers.listIterator();
             }
         }
         System.out.println();
-        System.out.println("stop this transfer, the last element is " + personNumbers.get(0));
+        System.out.println("count:" + count + ", stop this transfer, the last element is " + personNumbers.toString());
     }
 
     private static List<Integer> getPersonNumbers(int personNumber) {
