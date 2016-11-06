@@ -13,30 +13,24 @@ public class Question3_06 {
 
     public static void main(String... args) {
 
-//        pass(1, 0);
-//        josephus(1, 0);
-//        System.out.println("=================");
-//        pass(5, 0);
-//        josephus(5, 0);
-//        System.out.println("=================");
-//        pass(5, 1);
-//        josephus(5, 1);
-//        System.out.println("=================");
-//        pass(5, 5);
-//        josephus(5, 5);
+//        compare(15, 0);
+//        compare(15, 1);
+//        compare(15, 9);
+//        compare(155, 9);
+//        compare(155, 999);
+//        compare(155, 5555);
+//        compare(1545, 55523);
+//        compare(15455, 55523);
+//        compare(45155, 999);
+//        compare(45155, 55523);
+        compare(145155, 5233);
+    }
+
+    private static void compare(int personNumber, int transferTimes) {
+        pass(personNumber, transferTimes);
+        josephus(personNumber, transferTimes);
+        josephus2(personNumber, transferTimes);
         System.out.println("=================");
-        pass(155, 1555555);
-        josephus(155, 1555555);
-        josephus2(155, 1555555);
-//        System.out.println("=================");
-//        pass(1555, 1555555);
-//        josephus(1555, 1555555);
-//        System.out.println("=================");
-//        pass(15555, 1555555);
-//        josephus(15555, 1555555);
-//        System.out.println("=================");
-//        pass(155555, 1555555);
-//        josephus(155555, 1555555);
     }
 
     public static void pass(int n, int m) {
@@ -132,6 +126,9 @@ public class Question3_06 {
         for (int i = 0; i < personNumber; i++) {
             personNumbers.add(i + 1);
         }
+
+        LinkedList lst;
+        lst.
         return personNumbers;
     }
 
@@ -146,6 +143,79 @@ public class Question3_06 {
         return transferTimes % personNumbers.size();
     }
 
+    /**
+     * @param personNumber  围成圆圈的人的个数
+     * @param transferTimes 传递的次数
+     */
+    public static void josephus2(final int personNumber, final int transferTimes) {
+        TimeHelper timeHelper = new TimeHelper();
+        PrintBufferHelper printHelper = new PrintBufferHelper();
+
+        List<Integer> personNumbers = getPersonNumbers(personNumber);
+        ListIterator<Integer> personIter = personNumbers.listIterator();
+
+        int currIndex = 0;// iterator index
+
+        while (personNumbers.size() > 1) {
+            timeHelper.cpp();
+            final int currSize = personNumbers.size();
+            final int realTimes = getRealTransferTimes(personNumbers, transferTimes);
+            final int targetIndex = (realTimes + currIndex) % currSize;
+
+            if (targetIndex == currIndex) {
+                Integer currPersonNumber = personIter.next();
+                printHelper.printDelay(currPersonNumber + ",\t");
+                personIter.remove();
+            } else if (targetIndex > currIndex) {// c:3, t:100
+                // do next for non recycler
+                while (true) {
+                    timeHelper.cpp();
+                    Integer currPersonNumber = personIter.next();
+                    if (targetIndex == currIndex) {// find
+                        printHelper.printDelay(currPersonNumber + ",\t");
+                        personIter.remove();
+                        break;
+                    } else {
+                        currIndex++;
+                    }
+                }
+            } else {
+                if (targetIndex < currIndex - targetIndex) {// t:3, c:100
+                    personIter = personNumbers.listIterator();
+                    currIndex = 0;
+                    while (true) {
+                        timeHelper.cpp();
+                        Integer currPersonNumber = personIter.next();
+                        if (targetIndex == currIndex) {// find
+                            printHelper.printDelay(currPersonNumber + ",\t");
+                            personIter.remove();
+                            break;
+                        } else {
+                            currIndex++;
+                        }
+                    }
+                } else {// t:90, c:100
+                    // do previous for non recycler
+                    while (true) {
+                        timeHelper.cpp();
+                        if (targetIndex == currIndex) {// find
+                            Integer currPersonNumber = personIter.next();
+                            printHelper.printDelay(currPersonNumber + ",\t");
+                            personIter.remove();
+                            break;
+                        } else {
+                            personIter.previous();
+                            currIndex--;
+                        }
+                    }
+                }
+            }
+        }
+
+        printHelper.flush();
+        timeHelper.end().printLog();
+        System.out.println("stop this transfer, the last element is " + personNumbers.toString());
+    }
 
 
 }

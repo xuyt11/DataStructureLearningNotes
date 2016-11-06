@@ -24,7 +24,7 @@ public class PrintBufferHelper {
     }
 
     private void printBuffer() {
-        System.out.println(buffer.toString());
+//        System.out.println(buffer.toString());
     }
 
     private void clearBuffer() {
