@@ -10,7 +10,10 @@ public class Question3_06 {
 
     public static void main(String... args) {
 
+        josephus(1, 0);
+        josephus(5, 0);
         josephus(5, 1);
+        josephus(5, 5);
     }
 
     /**
@@ -24,25 +27,26 @@ public class Question3_06 {
 
         int transferCount = 0;
         while (personIter.hasNext()) {
+            if (personNumbers.size() == 1) {
+                break;
+            }
+
+            // must have two element in list
             if (transferCount == transferTimes) {// find target element
                 Integer currPersonNumber = personIter.next();
-                System.out.println("find curr person number:" + currPersonNumber);
-
+                System.out.print(currPersonNumber + ",\t");
                 personIter.remove();// remove target element
-                System.out.println("list:" + personNumbers.toString());
-
+//                System.out.println("list:" + personNumbers.toString());
                 transferCount = 0;// reset transfer count
             } else {// it`s must be transferCount < transferTimes
                 personIter.next();
                 transferCount++;
-
                 if (!personIter.hasNext()) {// move to last element
-                    if (personNumbers.size() > 1) {// move to behind element
-                        personIter = personNumbers.listIterator();
-                    }
+                    personIter = personNumbers.listIterator();
                 }
             }
         }
+        System.out.println();
         System.out.println("stop this transfer, the last element is " + personNumbers.get(0));
     }
 
