@@ -1,5 +1,8 @@
 package cn.ytxu.data_structure_and_algorithm_analysis_learning_notes.table_stack_queue_03;
 
+import cn.ytxu.util.PrintBufferHelper;
+import cn.ytxu.util.TimeHelper;
+
 import java.util.*;
 
 /**
@@ -22,12 +25,24 @@ public class Question3_06 {
 //        pass(5, 5);
 //        josephus(5, 5);
         System.out.println("=================");
-        pass(155, 155);
-        josephus(155, 155);
+        pass(155, 1555555);
+        josephus(155, 1555555);
+        josephus2(155, 1555555);
+//        System.out.println("=================");
+//        pass(1555, 1555555);
+//        josephus(1555, 1555555);
+//        System.out.println("=================");
+//        pass(15555, 1555555);
+//        josephus(15555, 1555555);
+//        System.out.println("=================");
+//        pass(155555, 1555555);
+//        josephus(155555, 1555555);
     }
 
     public static void pass(int n, int m) {
-        int count = 0;
+        TimeHelper timeHelper = new TimeHelper();
+        PrintBufferHelper printHelper = new PrintBufferHelper();
+
         int i, j, mPrime, numLeft;
         ArrayList<Integer> L = new ArrayList<>();
         for (i = 1; i <= n; i++)
@@ -37,27 +52,27 @@ public class Question3_06 {
         numLeft = n;
         mPrime = m % n;
         for (i = 0; i < n; i++) {
-            count++;
+            timeHelper.cpp();
             mPrime = m % numLeft;
             if (mPrime <= numLeft / 2) {
-                count++;
+                timeHelper.cpp();
                 if (iter.hasNext())
                     item = iter.next();
                 for (j = 0; j < mPrime; j++) {
-                    count++;
+                    timeHelper.cpp();
                     if (!iter.hasNext())
                         iter = L.listIterator();
                     item = iter.next();
                 }
             } else {
                 for (j = 0; j < numLeft - mPrime; j++) {
-                    count++;
+                    timeHelper.cpp();
                     if (!iter.hasPrevious())
                         iter = L.listIterator(L.size());
                     item = iter.previous();
                 }
             }
-            System.out.print(item + ",\t");
+            printHelper.printDelay(item + ",\t");
             iter.remove();
             if (!iter.hasNext())
                 iter = L.listIterator();
@@ -67,8 +82,8 @@ public class Question3_06 {
 //            System.out.println();
             numLeft--;
         }
-        System.out.println();
-        System.out.println("count" + count);
+        printHelper.flush();
+        timeHelper.end().printLog();
     }
 
     /**
@@ -76,15 +91,16 @@ public class Question3_06 {
      * @param transferTimes 传递的次数
      */
     public static void josephus(final int personNumber, final int transferTimes) {
+        TimeHelper timeHelper = new TimeHelper();
+        PrintBufferHelper printHelper = new PrintBufferHelper();
 
         List<Integer> personNumbers = getPersonNumbers(personNumber);
         ListIterator<Integer> personIter = personNumbers.listIterator();
 
-        int count = 0;
         int transferCount = 0;
         int realTimes = getRealTransferTimes(personNumbers, transferTimes);
         while (personIter.hasNext()) {
-            count++;
+            timeHelper.cpp();
             if (personNumbers.size() == 1) {// find end...
                 break;
             }
@@ -92,7 +108,7 @@ public class Question3_06 {
             // must have two element in list
             if (transferCount == realTimes) {// find target element
                 Integer currPersonNumber = personIter.next();
-                System.out.print(currPersonNumber + ",\t");
+                printHelper.printDelay(currPersonNumber + ",\t");
                 personIter.remove();// remove target element
 //                System.out.println("list:" + personNumbers.toString());
                 transferCount = 0;// reset transfer count
@@ -106,8 +122,9 @@ public class Question3_06 {
                 personIter = personNumbers.listIterator();
             }
         }
-        System.out.println();
-        System.out.println("count:" + count + ", stop this transfer, the last element is " + personNumbers.toString());
+        printHelper.flush();
+        timeHelper.end().printLog();
+        System.out.println("stop this transfer, the last element is " + personNumbers.toString());
     }
 
     private static List<Integer> getPersonNumbers(int personNumber) {
@@ -120,6 +137,7 @@ public class Question3_06 {
 
     /**
      * 获取当前，实际需要执行的传递次数
+     *
      * @param personNumbers
      * @param transferTimes
      * @return
@@ -127,5 +145,7 @@ public class Question3_06 {
     private static int getRealTransferTimes(List<Integer> personNumbers, int transferTimes) {
         return transferTimes % personNumbers.size();
     }
+
+
 
 }
