@@ -168,21 +168,6 @@ public class Question3_11 {
         }
     }
 
-    public static class Node<Element> {
-        private Element data;
-        private Node<Element> next;
-
-        public Node(Element data, Node<Element> next) {
-            this.data = data;
-            this.next = next;
-        }
-
-        @Override
-        public String toString() {
-            return "Node{" + "data=" + data + '}';
-        }
-    }
-
     public interface MyList<Element extends Comparable> {
         int size();
 

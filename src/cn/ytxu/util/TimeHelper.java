@@ -11,7 +11,7 @@ public class TimeHelper {
     private List<String> durations = new ArrayList<>(10);// 每次调用的间隔
 
     public TimeHelper() {
-        start = System.currentTimeMillis();
+        start = System.nanoTime();
     }
 
     public TimeHelper cpp() {
@@ -19,14 +19,19 @@ public class TimeHelper {
         return this;
     }
 
+    public TimeHelper cpp(int times) {
+        count += times;
+        return this;
+    }
+
     public void duration() {
-        long curr = System.currentTimeMillis();
+        long curr = System.nanoTime();
         durations.add("" + (curr - start));
         times.add(curr);
     }
 
     public TimeHelper end() {
-        end = System.currentTimeMillis();
+        end = System.nanoTime();
         return this;
     }
 
