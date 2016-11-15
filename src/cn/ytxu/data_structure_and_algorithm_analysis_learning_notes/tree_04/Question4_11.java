@@ -21,6 +21,7 @@ public class Question4_11 {
         set.print();
         System.out.println("max:" + set.findMax());
         System.out.println("min:" + set.findMin());
+        
     }
 
 
@@ -71,7 +72,7 @@ public class Question4_11 {
         }
 
         private Node<Element> findMin(Node<Element> node) {
-            if (root == null) {
+            if (node == null) {
                 return null;
             }
             if (node.left == null) {
@@ -88,13 +89,13 @@ public class Question4_11 {
         }
 
         private Node<Element> findMax(Node<Element> node) {
-            if (root == null) {
+            if (node == null) {
                 return null;
             }
             if (node.right == null) {
                 return node;
             }
-            return findMin(node.right);
+            return findMax(node.right);
         }
 
         public Node<Element> insert(Element data) {
