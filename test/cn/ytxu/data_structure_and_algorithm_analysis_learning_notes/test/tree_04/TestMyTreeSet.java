@@ -38,4 +38,10 @@ public class TestMyTreeSet {
         Assert.assertEquals(true, set.contains(3));
         Assert.assertEquals(false, set.contains(10));
     }
+
+    @Test
+    public void testRemove() {
+        Assert.assertNotEquals(null, set.remove(3));
+        Assert.assertEquals(null, set.remove(10));
+    }
 }

@@ -121,6 +121,7 @@ public class MyTreeSet<Element extends Comparable<Element>> {
             } else if (compare > 0) {
                 node = node.left;
             } else {// find target node
+                return node;
             }
         } while (node != null);
         return node;
