@@ -27,9 +27,9 @@ public class MyTreeSet<Element extends Comparable<Element>> {
         }
         int compare = node.data.compareTo(data);
         if (compare < 0) {
-            return find(root.right, data);
+            return find(node.right, data);
         } else if (compare > 0) {
-            return find(root.left, data);
+            return find(node.left, data);
         } else {
             return node;
         }
