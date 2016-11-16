@@ -1,5 +1,8 @@
 package cn.ytxu.data_structure_and_algorithm_analysis_learning_notes.tree_04;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class MyTreeSet<Element extends Comparable<Element>> {
     public static class Node<Element extends Comparable<Element>> {
         public Element data;
@@ -154,6 +157,58 @@ public class MyTreeSet<Element extends Comparable<Element>> {
             depathStr += "\t";
         }
         System.out.println(depathStr + node.data.toString());
+    }
+
+
+    public Iterator<Element> iterator() {
+        return new MyIterator();
+    }
+
+    private class MyIterator implements Iterator<Element> {
+
+        private Node<Element> curr, previous;
+        private boolean hasNext;
+
+        public MyIterator() {
+            this.curr = findMin(root);
+            hasNext = curr != null;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return hasNext;
+        }
+
+        @Override
+        public Element next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Element data = curr.data;
+            previous = curr;
+
+            if (curr.right != null) {
+                curr = findMin(curr.right);
+            } else {
+                Node<Element> child = curr;
+                curr = curr.parent;
+
+                while (curr != null && curr.left != child) {
+                    child = curr;
+                    curr = curr.parent;
+                }
+
+                if (curr == null) {
+                    hasNext = false;
+                }
+            }
+            return data;
+        }
+
+        @Override
+        public void remove() {
+            MyTreeSet.this.remove(previous.data);
+        }
     }
 
 }

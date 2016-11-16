@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Iterator;
+
 /**
  * Created by ytxu on 16/11/15.
  */
@@ -15,16 +17,16 @@ public class TestMyTreeSet {
     public void createTreeSet() {
         set = new MyTreeSet<>();
         set.print();
-//        for (int i = 0; i < 10; i++) {
-//            set.insert(i);
-//            i++;
-//        }
-//        set.print();
-//        for (int i = 1; i < 10; i++) {
-//            set.insert(i);
-//            i++;
-//        }
-//        set.print();
+        for (int i = 0; i < 10; i++) {
+            set.insert(i);
+            i++;
+        }
+        set.print();
+        for (int i = 1; i < 10; i++) {
+            set.insert(i);
+            i++;
+        }
+        set.print();
     }
 
     @Test
@@ -45,6 +47,14 @@ public class TestMyTreeSet {
     public void testRemove() {
         Assert.assertEquals(null, set.remove(3));
         Assert.assertEquals(null, set.remove(10));
+    }
+
+    @Test
+    public void testIterator() {
+        Iterator<Integer> ite = set.iterator();
+        while(ite.hasNext()) {
+            System.out.println("ite:" + ite.next());
+        }
     }
 
 }
