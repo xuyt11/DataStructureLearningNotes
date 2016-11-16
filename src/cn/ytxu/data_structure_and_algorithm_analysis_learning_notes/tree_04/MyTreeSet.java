@@ -124,10 +124,42 @@ public class MyTreeSet<Element extends Comparable<Element>> {
             } else if (compare > 0) {
                 node = node.left;
             } else {// find target node
+                removeNode(node);
                 return node;
             }
         } while (node != null);
         return node;
+    }
+
+    private void removeNode(Node<Element> node) {
+        if (node.parent == null) {// is root
+            root = null;
+            return;
+        }
+
+        boolean leftIsNull = node.left == null;
+        boolean rightIsNull = node.right == null;
+        if (leftIsNull && rightIsNull) {// none child
+            Node<Element> parent = node.parent;
+            if (parent.left == node) {
+                parent.left = null;
+            } else {
+                parent.right = null;
+            }
+        } else if (!leftIsNull && !rightIsNull) {// two children
+            Node<Element> min = findMin(node.right);
+            node.data = min.data;
+            remove(min.data);
+        } else {// one child
+            Node<Element> parent = node.parent;
+            Node<Element> child = leftIsNull ? node.right : node.left;
+            child.parent = parent;
+            if (parent.left == node) {
+                parent.left = child;
+            } else {
+                parent.right = child;
+            }
+        }
     }
 
     public void print() {

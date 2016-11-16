@@ -45,16 +45,23 @@ public class TestMyTreeSet {
 
     @Test
     public void testRemove() {
-        Assert.assertEquals(null, set.remove(3));
+        testIterator();
+        Assert.assertNotEquals(null, set.remove(3));
+        testIterator();
         Assert.assertEquals(null, set.remove(10));
+        testIterator();
+        Assert.assertNotEquals(null, set.remove(7));
+        testIterator();
+        set.print();
     }
 
     @Test
     public void testIterator() {
         Iterator<Integer> ite = set.iterator();
         while(ite.hasNext()) {
-            System.out.println("ite:" + ite.next());
+            System.out.print(ite.next() + ", ");
         }
+        System.out.println();
     }
 
 }
